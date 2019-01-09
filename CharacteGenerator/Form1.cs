@@ -14,6 +14,8 @@ namespace CharacteGenerator
     public partial class Form1 : Form
     {
         InitialiseObjects initialiser = new InitialiseObjects();
+        List<RichTextBox> richTextBoxList = new List<RichTextBox>();
+        int index = 0; 
 
         public Form1()
         {
@@ -38,7 +40,33 @@ namespace CharacteGenerator
 
         private void GenerateFilters()
         {
+          
+            foreach (ControlledVocabualry controlledVocabualry in initialiser.controlledVocabList)
+            {
+                RichTextBox rtb = new RichTextBox();
+                rtb.Dock = DockStyle.Fill;
+                rtb.Text = controlledVocabualry.vocabName;
+                richTextBoxList.Add(rtb);
+                if (index == 0)
+                {
+                    tableLayoutPanel1.Controls.Add(rtb, index, 1);
+                }
+                else
+                {
+                    tableLayoutPanel1.ColumnCount++;
+                    tableLayoutPanel1.Controls.Add(rtb, index, 1);
+                }
+                index++;
+                TableLayoutColumnStyleCollection styles = tableLayoutPanel1.ColumnStyles;
+                foreach (ColumnStyle style in styles)
+                {
+                    style.SizeType = SizeType.Absolute;
+                    style.Width = 150;
+                }
 
+            }
+
+           
         }
 
         private void generateButton_Click(object sender, EventArgs e)
