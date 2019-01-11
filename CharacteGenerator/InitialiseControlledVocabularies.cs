@@ -63,6 +63,7 @@ namespace CharacteGenerator
                             {
                                 vocab.values.Add(splitvalues[j]);
                             }
+                            i--;
                         }
 
                     }
@@ -131,11 +132,14 @@ namespace CharacteGenerator
                             ControlledVocabualry controlledVocab = new ControlledVocabualry();
                             controlledVocab.vocabName = controlledVocabNames[j];
                             string[] splitCollumn = collumns[j].Split(';');
+                         
                             for (int k = 0; k < splitCollumn.Length; k++)
                             {
                                 controlledVocab.values.Add(splitCollumn[k]);
                             }
                             imageTuple.controlledVocabualries.Add(controlledVocab);
+                            
+                            
                         }
 
                     }
