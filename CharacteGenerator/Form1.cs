@@ -17,7 +17,8 @@ namespace CharacteGenerator
         List<RichTextBox> richTextBoxList = new List<RichTextBox>();
         List<ListBox> listBoxList = new List<ListBox>();
         List<ListBox> listBoxList2 = new List<ListBox>();
-        int index = 0; 
+        int index = 0;
+        string fileLocation = @".\Character Images Final\";
 
         public Form1()
         {
@@ -162,16 +163,16 @@ namespace CharacteGenerator
                     if (selectedFiltersList[i].values.Count > 0)
                     {
                         oneMatch = false;
-                    }                   
+                    }
                     foreach (string vocabValue in selectedFiltersList[i].values)
-                    {            
-                        
+                    {
+
                         Console.WriteLine(tuple.controlledVocabualries[i - 1].vocabName);
                         if ((tuple.controlledVocabualries[i - 1].values.Contains(vocabValue)))
                         {
                             oneMatch = true;
                         }
-                       
+
                     }
                     if (oneMatch == false)
                     {
@@ -183,10 +184,20 @@ namespace CharacteGenerator
                     filteredImageIdList.Add(tuple.imageID);
                 }
             }
+            richTextBox.AppendText("\n" + "Results from filter:");
             foreach (string imageid in filteredImageIdList)
             {
                 richTextBox.AppendText("\n" + imageid);
             }
+            if (filteredImageIdList.Count > 0)
+            {
+                Random rnd = new Random();
+                int selectedImageListLocation;
+                selectedImageListLocation = rnd.Next(filteredImageIdList.Count);
+                pictureBox1.Image = Image.FromFile(fileLocation + filteredImageIdList[selectedImageListLocation] + ".jpg");
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+           
         }
     }
 }
