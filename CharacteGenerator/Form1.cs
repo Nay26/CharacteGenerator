@@ -137,10 +137,56 @@ namespace CharacteGenerator
 
         private void generateButton_Click(object sender, EventArgs e)
         {
+            // Get filter options:
+            List<ControlledVocabualry> selectedFiltersList = new List<ControlledVocabualry>();
+            for (int i = 0; i < listBoxList2.Count(); i++)
+            {
+                ControlledVocabualry cv = new ControlledVocabualry();
+                cv.vocabName = initialiser.controlledVocabList[i].vocabName;
+                List<string> lb2ValueList = new List<string>();
+                lb2ValueList = listBoxList2[i].DataSource as List<string>;
+                cv.values = lb2ValueList;
+                selectedFiltersList.Add(cv);
+            }
+
+            List<string> filteredImageIdList = new List<string>();
+            Boolean match = false;
+            // Compare with Image Tuples: Output a list of valid image ID's
             foreach (ImageTuple tuple in initialiser.imageTupleList)
             {
-
-            } 
+                Console.WriteLine(tuple.imageID);
+                match = true;
+                for (int i = 1; i < selectedFiltersList.Count; i++)
+                {
+                    Boolean oneMatch = true;
+                    if (selectedFiltersList[i].values.Count > 0)
+                    {
+                        oneMatch = false;
+                    }                   
+                    foreach (string vocabValue in selectedFiltersList[i].values)
+                    {            
+                        
+                        Console.WriteLine(tuple.controlledVocabualries[i - 1].vocabName);
+                        if ((tuple.controlledVocabualries[i - 1].values.Contains(vocabValue)))
+                        {
+                            oneMatch = true;
+                        }
+                       
+                    }
+                    if (oneMatch == false)
+                    {
+                        match = false;
+                    }
+                }
+                if (match == true)
+                {
+                    filteredImageIdList.Add(tuple.imageID);
+                }
+            }
+            foreach (string imageid in filteredImageIdList)
+            {
+                richTextBox.AppendText("\n" + imageid);
+            }
         }
     }
 }
